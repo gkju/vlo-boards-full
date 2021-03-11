@@ -1,3 +1,6 @@
-[submodule "submodules/vlo-accounts"]
+[submodule "vlo-accounts"]
 	path = submodules/vlo-accounts
 	url = https://github.com/GJUSZ/vlo-accounts
+[submodule "vlo-boards-api"]
+	path = submodules/vlo-boards-api
+	url = https://github.com/GJUSZ/vlo-boards-api

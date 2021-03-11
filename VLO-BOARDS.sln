@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VLO-ACCOUNTS", "VLO-ACCOUNTS\VLO-ACCOUNTS.csproj", "{57E13A04-0159-4EBF-A96D-FDBBA7C52853}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "vlo-boards-api", "vlo-boards-api\vlo-boards-api.csproj", "{45AD2D8E-1A67-4E11-BFFD-651477011AE0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{57E13A04-0159-4EBF-A96D-FDBBA7C52853}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{57E13A04-0159-4EBF-A96D-FDBBA7C52853}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{57E13A04-0159-4EBF-A96D-FDBBA7C52853}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45AD2D8E-1A67-4E11-BFFD-651477011AE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45AD2D8E-1A67-4E11-BFFD-651477011AE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45AD2D8E-1A67-4E11-BFFD-651477011AE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45AD2D8E-1A67-4E11-BFFD-651477011AE0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
