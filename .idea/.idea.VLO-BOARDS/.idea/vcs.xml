@@ -2,6 +2,7 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/AccountsData" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/VLO-ACCOUNTS" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/VLO-BOARDS" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/VLO-BOARDS/vlo-boards" vcs="Git" />

@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VLO-ACCOUNTS", "VLO-ACCOUNT
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "vlo-boards-api", "vlo-boards-api\vlo-boards-api.csproj", "{45AD2D8E-1A67-4E11-BFFD-651477011AE0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccountsData", "AccountsData\AccountsData.csproj", "{B54E9F04-C29A-446B-8172-276A06BDED38}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{45AD2D8E-1A67-4E11-BFFD-651477011AE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{45AD2D8E-1A67-4E11-BFFD-651477011AE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{45AD2D8E-1A67-4E11-BFFD-651477011AE0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B54E9F04-C29A-446B-8172-276A06BDED38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B54E9F04-C29A-446B-8172-276A06BDED38}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B54E9F04-C29A-446B-8172-276A06BDED38}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B54E9F04-C29A-446B-8172-276A06BDED38}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
