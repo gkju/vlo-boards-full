@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "vlo-boards-api", "vlo-board
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccountsData", "AccountsData\AccountsData.csproj", "{B54E9F04-C29A-446B-8172-276A06BDED38}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccountsDataTesting", "AccountsDataTesting\AccountsDataTesting.csproj", "{C4C8FC33-ACFD-4BB3-B9A2-C396CC997E0D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,11 +29,17 @@ Global
 		{B54E9F04-C29A-446B-8172-276A06BDED38}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B54E9F04-C29A-446B-8172-276A06BDED38}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B54E9F04-C29A-446B-8172-276A06BDED38}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4C8FC33-ACFD-4BB3-B9A2-C396CC997E0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4C8FC33-ACFD-4BB3-B9A2-C396CC997E0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4C8FC33-ACFD-4BB3-B9A2-C396CC997E0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4C8FC33-ACFD-4BB3-B9A2-C396CC997E0D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DAA7391F-D42D-420A-9669-6AD6AD9C51C3}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
 	EndGlobalSection
 EndGlobal
