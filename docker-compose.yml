@@ -1,0 +1,38 @@
+version: '3.7'
+
+services:
+    db:
+      image: postgres:latest
+      command: -c ssl=on -c ssl_cert_file=/var/lib/postgresql/server.crt -c ssl_key_file=/var/lib/postgresql/server.key
+      environment:
+        - POSTGRES_PASSWORD_FILE=/run/secrets/pgpw
+        - POSTGRES_USER_FILE=/run/secrets/pgusername
+      volumes:
+        - ./db:/var/lib/postgresql/data
+        - ./secrets/pg.crt:/var/lib/postgresql/server.crt
+        - ./secrets/pg.key:/var/lib/postgresql/server.key
+      secrets:
+        - pgpw
+        - pgusername
+    minio:
+      image: minio/minio:latest
+      environment:
+        - MINIO_ROOT_USER_FILE=/run/secrets/MINIO_ROOT_USER_FILE
+        - MINIO_ROOT_PASSWORD_FILE=/run/secrets/MINIO_ROOT_PASSWORD_FILE
+        - CONSOLE_ADDRESS=:40761
+      volumes:
+        - ./minio-server:/data
+      secrets:
+        - MINIO_ROOT_USER_FILE
+        - MINIO_ROOT_PASSWORD_FILE
+      command: server /data --console-address ":9001"
+
+secrets:
+  pgpw:
+    file: ./secrets/pgpw
+  pgusername:
+    file: ./secrets/pgusername
+  MINIO_ROOT_USER_FILE:
+    file: ./secrets/MINIO_ROOT_USER_FILE
+  MINIO_ROOT_PASSWORD_FILE:
+    file: ./secrets/MINIO_ROOT_PASSWORD_FILE
