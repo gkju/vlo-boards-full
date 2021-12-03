@@ -4,6 +4,8 @@
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/AccountsData" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/VLO-ACCOUNTS" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/VLO-ACCOUNTS/vlo-accounts-frontend" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/VLO-ACCOUNTS/vlo-accounts-frontend/src/packages/vlo-accounts-client" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/vlo-boards-api" vcs="Git" />
   </component>
 </project>
