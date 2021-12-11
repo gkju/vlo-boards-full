@@ -1,9 +1,12 @@
 [submodule "vlo-boards-api"]
 	path = vlo-boards-api
 	url = git@github.com:gkju/vlo-boards-api
+	branch = master
 [submodule "VLO-ACCOUNTS"]
 	path = VLO-ACCOUNTS
 	url = git@github.com:gkju/vlo-accounts
+	branch = main
 [submodule "AccountsData"]
 	path = AccountsData
 	url = git@github.com:gkju/AccountsData
+	branch = master
