@@ -1,7 +1,6 @@
-<<<<<<< HEAD
 secrets/
 minio-server/*
 db
-=======
 secrets
->>>>>>> c6a68497c72e02850292b9f32134c6ac4e6440de
+.vs
+.idea
