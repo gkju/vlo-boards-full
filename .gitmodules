@@ -10,3 +10,6 @@
 	path = AccountsData
 	url = git@github.com:gkju/AccountsData
 	branch = master
+[submodule "suvlo-main"]
+	path = suvlo-main
+	url = git@github.com:gkju/suvlo-main
