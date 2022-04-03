@@ -16,3 +16,6 @@
 [submodule "vlo-ui"]
 	path = vlo-ui
 	url = git@github.com:gkju/vlo-ui
+[submodule "vlo-accounts-client"]
+	path = vlo-accounts-client
+	url = git@github.com:gkju/vlo-accounts-client-axios-ts
