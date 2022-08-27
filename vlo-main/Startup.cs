@@ -32,7 +32,6 @@ public partial class Startup
                 googleSecret = "",
                 appDbContextNpgsqlConnection = "",
                 is4DbContextNpgsqlConnection = "",
-                migrationsAssembly = "",
                 captchaKey = "",
                 captchaPk = "",
                 mailKey = "",
@@ -69,7 +68,6 @@ public partial class Startup
                 twClientSecret = Configuration["TwitterAuth:SecretKey"];
                 appDbContextNpgsqlConnection = Configuration.GetConnectionString("NPGSQL");
                 is4DbContextNpgsqlConnection = Configuration.GetConnectionString("IDENTITYDB");
-                migrationsAssembly = typeof(VLO_BOARDS.Startup).GetTypeInfo().Assembly.GetName().Name;
                 captchaPk = Configuration["CaptchaCredentials:PrivateKey"];
                 captchaKey = Configuration["CaptchaCredentials:PublicKey"];
                 
@@ -122,7 +120,7 @@ public partial class Startup
             services.AddDbContext<ApplicationDbContext>((sp, options) =>
             {
                 options.AddInterceptors(sp.GetRequiredService<FileInterceptor>());
-                options.UseNpgsql(appDbContextNpgsqlConnection, sql => sql.MigrationsAssembly(migrationsAssembly));
+                options.UseNpgsql(appDbContextNpgsqlConnection);
             });
 
             services.AddScoped<IPasswordHasher<ApplicationUser>, Argon2IDHasher<ApplicationUser>>();

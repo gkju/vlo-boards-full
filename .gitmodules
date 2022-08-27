@@ -22,3 +22,6 @@
 [submodule "vlo-accounts-client"]
 	path = vlo-accounts-client
 	url = git@github.com:gkju/vlo-accounts-client-axios-ts
+[submodule "vlo-main-frontend"]
+	path = vlo-main-frontend
+	url = git@github.com:gkju/vlo-main-frontend.git

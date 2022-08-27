@@ -18,8 +18,13 @@ public class WeatherForecastController : ControllerBase
         _logger = logger;
     }
 
+    /// <summary>
+    /// bkabka
+    /// </summary>
+    /// <param name="confirmEmailInput"></param>
+    /// <returns> aaaa </returns>
     [HttpGet(Name = "GetWeatherForecast")]
-    public IEnumerable<WeatherForecast> Get()
+    public IEnumerable<WeatherForecast> OnGet()
     {
         return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {

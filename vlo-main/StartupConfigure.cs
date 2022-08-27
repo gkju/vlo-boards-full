@@ -25,9 +25,6 @@ public partial class Startup {
                 MinimumSameSitePolicy = SameSiteMode.Strict
             });
         }
-        
-        IS4Utils.InitializeDatabase(app, new Config(env));
-        VLO_BOARDS.Startup.EnsureBucketsExits(minioClient, minioConfig).Wait();
 
         if (env.IsDevelopment())
         {
