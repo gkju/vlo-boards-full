@@ -22,3 +22,6 @@
 [submodule "vlo-main-frontend"]
 	path = vlo-main-frontend
 	url = git@github.com:gkju/vlo-main-frontend.git
+[submodule "vlo-main"]
+	path = vlo-main
+	url = git@github.com:gkju/vlo-main.git
