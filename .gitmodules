@@ -13,9 +13,6 @@
 [submodule "suvlo-main"]
 	path = suvlo-main
 	url = git@github.com:gkju/suvlo-main
-[submodule "vlo-main"]
-	path = vlo-main
-	url = git@github.com:gkju/vlo-main.git
 [submodule "vlo-ui"]
 	path = vlo-ui
 	url = git@github.com:gkju/vlo-ui
