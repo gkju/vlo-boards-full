@@ -1,41 +1,132 @@
-version: '3.7'
+version: '3.9'
 
 services:
     db:
-      build:
-        context: ./secrets
-        dockerfile: ../pgsql/Dockerfile
       image: postgres:latest
-      command: -c ssl=on -c ssl_cert_file=/var/lib/postgresql/server.crt -c ssl_key_file=/var/lib/postgresql/server.key
       environment:
         - POSTGRES_PASSWORD_FILE=/run/secrets/pgpw
         - POSTGRES_USER_FILE=/run/secrets/pgusername
       volumes:
         - ./db:/var/lib/postgresql/data
-        - ./secrets/pg.crt:/var/lib/postgresql/server.crt
-        - ./secrets/pg.key:/var/lib/postgresql/server.key
       secrets:
         - pgpw
         - pgusername
     minio:
       image: minio/minio:latest
       environment:
-        - MINIO_ROOT_USER_FILE=/run/secrets/MINIO_ROOT_USER_FILE
-        - MINIO_ROOT_PASSWORD_FILE=/run/secrets/MINIO_ROOT_PASSWORD_FILE
-        - CONSOLE_ADDRESS=:40761
+        - MINIO_ROOT_USER_FILE=/run/secrets/minio__access
+        - MINIO_ROOT_PASSWORD_FILE=/run/secrets/minio__secret
+        - MINIO_BROWSER_REDIRECT_URL=https://consoleminio.suvlo.pl
+      command:
+        - server
+        - /data
+        - --console-address
+        - ":9001"
       volumes:
         - ./minio-server:/data
       secrets:
-        - MINIO_ROOT_USER_FILE
-        - MINIO_ROOT_PASSWORD_FILE
-      command: server /data --console-address ":9001"
+        - minio__access
+        - minio__secret
+        - minio__endpoint
+      labels:
+        - "traefik.enable=true"
+        - traefik.http.routers.minio.tls=true
+        - traefik.http.routers.minio-console.tls=true
+        - "traefik.http.routers.minio.rule=Host(`minio.suvlo.pl`)"
+        - "traefik.http.services.minio.loadbalancer.server.port=9000"
+        - "traefik.http.routers.minio.service=minio"
 
+        - "traefik.http.routers.minio-console.service=minio-console"
+        - "traefik.http.routers.minio-console.rule=Host(`consoleminio.suvlo.pl`)"
+        - "traefik.http.services.minio-console.loadbalancer.server.port=9001"
+    clam:
+      image: tiredofit/clamav:latest
+    meili:
+      image: getmeili/meilisearch:latest
+    accounts:
+      build:
+        context: .
+        dockerfile: ./VLO-ACCOUNTS/Dockerfile
+      environment:
+        - ASPNETCORE_ENVIRONMENT=Production
+        - ASPNETCORE_URLS=http://+
+        - DOTNET_URLS=http://+
+      depends_on:
+        - db
+        - minio
+        - meili
+        - clam
+        - reverse-proxy
+      secrets:
+        - pgpw
+        - pgusername
+        - minio__access
+        - minio__secret
+        - minio__endpoint
+        - CaptchaCredentials__PrivateKey
+        - CaptchaCredentials__PublicKey
+        - ConnectionStrings__IDENTITYDB
+        - ConnectionStrings__NPGSQL
+        - GoogleAuth__ClientId
+        - GoogleAuth__SecretKey
+        - MicrosoftAuth__ClientId
+        - MicrosoftAuth__SecretKey
+        - TwitterAuth__ClientId
+        - TwitterAuth__SecretKey
+        - IdentityServer__LicenseKey
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.accounts.tls=true"
+        - "traefik.http.routers.accounts.service=accounts"
+        - "traefik.http.routers.accounts.rule=Host(`accounts.suvlo.pl`)"
+        - "traefik.http.services.accounts.loadbalancer.server.port=80"
+    reverse-proxy:
+      # The official v2 Traefik docker image
+      image: traefik:latest
+      ports:
+        - "80:80"
+        - "443:443"
+        - "9000:9000"
+        - "9001:9001"
+      command: --providers.docker
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.traefik.entrypoints=https,http,minio,minioconsole"
+      volumes:
+        - ./traefik/traefik.yml:/etc/traefik/traefik.yml:ro
+        - ./traefik/config.yml:/etc/traefik/config.yml:ro
+        - ./certs:/etc/certs:ro
+        - /var/run/user/1001/docker.sock:/var/run/docker.sock:ro
 secrets:
   pgpw:
     file: ./secrets/pgpw
   pgusername:
     file: ./secrets/pgusername
-  MINIO_ROOT_USER_FILE:
-    file: ./secrets/MINIO_ROOT_USER_FILE
-  MINIO_ROOT_PASSWORD_FILE:
-    file: ./secrets/MINIO_ROOT_PASSWORD_FILE
+  minio__access:
+   file: ./secrets/minio__access
+  minio__secret:
+    file: ./secrets/minio__secret
+  minio__endpoint:
+    file: ./secrets/minio__endpoint
+  CaptchaCredentials__PrivateKey:
+    file: ./secrets/CaptchaCredentials__PrivateKey
+  CaptchaCredentials__PublicKey:
+    file: ./secrets/CaptchaCredentials__PublicKey
+  ConnectionStrings__IDENTITYDB:
+    file: ./secrets/ConnectionStrings__IDENTITYDB
+  ConnectionStrings__NPGSQL:
+    file: ./secrets/ConnectionStrings__NPGSQL
+  GoogleAuth__ClientId:
+    file: ./secrets/GoogleAuth__ClientId
+  GoogleAuth__SecretKey:
+    file: ./secrets/GoogleAuth__SecretKey
+  MicrosoftAuth__ClientId:
+    file: ./secrets/MicrosoftAuth__ClientId
+  MicrosoftAuth__SecretKey:
+    file: ./secrets/MicrosoftAuth__SecretKey
+  TwitterAuth__ClientId:
+    file: ./secrets/TwitterAuth__ClientId
+  TwitterAuth__SecretKey:
+    file: ./secrets/TwitterAuth__SecretKey
+  IdentityServer__LicenseKey:
+    file: ./secrets/IdentityServer__LicenseKey
