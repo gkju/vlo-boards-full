@@ -11,9 +11,11 @@ services:
       secrets:
         - pgpw
         - pgusername
+      restart: on-failure
     minio:
       image: minio/minio:latest
       environment:
+        - MINIO_REGION="eu-central-1"
         - MINIO_ROOT_USER_FILE=/run/secrets/minio__access
         - MINIO_ROOT_PASSWORD_FILE=/run/secrets/minio__secret
         - MINIO_BROWSER_REDIRECT_URL=https://consoleminio.suvlo.pl
@@ -31,18 +33,61 @@ services:
       labels:
         - "traefik.enable=true"
         - traefik.http.routers.minio.tls=true
-        - traefik.http.routers.minio-console.tls=true
         - "traefik.http.routers.minio.rule=Host(`minio.suvlo.pl`)"
         - "traefik.http.services.minio.loadbalancer.server.port=9000"
         - "traefik.http.routers.minio.service=minio"
-
+        - traefik.http.routers.minio-console.tls=true
         - "traefik.http.routers.minio-console.service=minio-console"
         - "traefik.http.routers.minio-console.rule=Host(`consoleminio.suvlo.pl`)"
         - "traefik.http.services.minio-console.loadbalancer.server.port=9001"
+      restart: on-failure
     clam:
-      image: tiredofit/clamav:latest
+      image: mailu/clamav:master-arm
+      restart: on-failure
     meili:
       image: getmeili/meilisearch:latest
+      volumes:
+        - ./meili_data:/meili_data
+      environment:
+        - MEILI_MASTER_KEY=masterKey
+      restart: on-failure
+    boards:
+      build:
+        context: .
+        dockerfile: ./vlo-main/Dockerfile
+      environment:
+        - ASPNETCORE_ENVIRONMENT=Production
+        - ASPNETCORE_URLS=http://+
+        - DOTNET_URLS=http://+
+      depends_on:
+        - db
+        - minio
+        - meili
+        - clam
+        - accounts
+      secrets:
+        - pgpw
+        - pgusername
+        - minio__access
+        - minio__secret
+        - minio__endpoint
+        - CaptchaCredentials__PrivateKey
+        - CaptchaCredentials__PublicKey
+        - ConnectionStrings__IDENTITYDB
+        - ConnectionStrings__NPGSQL
+        - GoogleAuth__ClientId
+        - GoogleAuth__SecretKey
+        - MicrosoftAuth__ClientId
+        - MicrosoftAuth__SecretKey
+        - TwitterAuth__ClientId
+        - TwitterAuth__SecretKey
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.boards.tls=true"
+        - "traefik.http.routers.boards.service=boards"
+        - "traefik.http.routers.boards.rule=Host(`suvlo.pl`) || Host(`boards.suvlo.pl`)"
+        - "traefik.http.services.boards.loadbalancer.server.port=80"
+      restart: on-failure
     accounts:
       build:
         context: .
@@ -80,6 +125,7 @@ services:
         - "traefik.http.routers.accounts.service=accounts"
         - "traefik.http.routers.accounts.rule=Host(`accounts.suvlo.pl`)"
         - "traefik.http.services.accounts.loadbalancer.server.port=80"
+      restart: on-failure
     reverse-proxy:
       # The official v2 Traefik docker image
       image: traefik:latest
@@ -97,6 +143,7 @@ services:
         - ./traefik/config.yml:/etc/traefik/config.yml:ro
         - ./certs:/etc/certs:ro
         - /var/run/user/1001/docker.sock:/var/run/docker.sock:ro
+      restart: on-failure
 secrets:
   pgpw:
     file: ./secrets/pgpw
